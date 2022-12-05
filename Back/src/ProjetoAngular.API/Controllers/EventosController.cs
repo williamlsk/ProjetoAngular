@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using ProjetoAngular.API.Data;
-using ProjetoAngular.API.Models;
+using ProjetoAngular.Domain;
+using ProjetoAngular.Persistence.Context;
 
 namespace ProjetoAngular.API.Controllers
 {
@@ -14,8 +11,8 @@ namespace ProjetoAngular.API.Controllers
     public class EventosController : ControllerBase
     {
       
-        private readonly DataContext _context;
-        public EventosController(DataContext context)
+        private readonly ProjetoAngularContext _context;
+        public EventosController(ProjetoAngularContext context)
         {
             _context = context;
         }
@@ -23,13 +20,13 @@ namespace ProjetoAngular.API.Controllers
         [HttpGet]
         public IEnumerable<Evento> Get()
         {
-           return _context.Eventos;
+           return _context.Evento;
         }
         
         [HttpGet("{id}")]
         public Evento GetById(int id)
         {
-           return _context.Eventos.FirstOrDefault(evento => evento.EventoId == id);
+           return _context.Evento.FirstOrDefault(evento => evento.Id == id);
         }
 
         [HttpPost]
