@@ -15,7 +15,7 @@ namespace ProjetoAngular.Persistence
 
         public EventoPersistence(ProjetoAngularContext context)
         {
-            _context = context;    
+            _context = context;
         }
         
         public async Task<Evento[]> GetAllEventosAsync(bool incluirPalestrante = false)
@@ -29,10 +29,10 @@ namespace ProjetoAngular.Persistence
                     query = query.Include(e => e.PalestranteEvento).ThenInclude(pe => pe.Palestrante);
             }
 
-            query = query.OrderBy(e => e.Id);
+            query = query.AsNoTracking().OrderBy(e => e.Id);
 
             
-            return await query.ToArrayAsync();
+            return await query.AsNoTracking().ToArrayAsync();
         }
 
         public async Task<Evento> GetEventoByIdAsync(int eventoid, bool incluirPalestrante = false)
@@ -50,7 +50,7 @@ namespace ProjetoAngular.Persistence
             query = query.OrderBy(e => e.Id)
                          .Where(e => e.Id == eventoid);
             
-            return await query.FirstOrDefaultAsync();
+            return await query.AsNoTracking().FirstOrDefaultAsync();
         }
         public async Task<Evento[]> GetAllEventosByTemaAsync(string tema, bool incluirPalestrante = false)
         {
@@ -66,7 +66,7 @@ namespace ProjetoAngular.Persistence
             query = query.OrderBy(e => e.Id)
                          .Where(e => e.Tema.ToLower().Contains(tema.ToLower()));
             
-            return await query.ToArrayAsync();
+            return await query.AsNoTracking().ToArrayAsync();
         }
 
         

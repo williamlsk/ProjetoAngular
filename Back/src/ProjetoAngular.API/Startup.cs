@@ -5,7 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using ProjetoAngular.Application;
+using ProjetoAngular.Application.Contracts;
+using ProjetoAngular.Persistence;
 using ProjetoAngular.Persistence.Context;
+using ProjetoAngular.Persistence.Contracts;
 
 namespace ProjetoAngular.API
 {
@@ -24,7 +28,15 @@ namespace ProjetoAngular.API
             services.AddDbContext<ProjetoAngularContext>(
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(
+                        x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    );
+
+
+            services.AddScoped<IEventoService, EventoService>();
+            services.AddScoped<IBasePersistence, BasePersistence>();
+            services.AddScoped<IEventoPersistence, EventoPersistence>();
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
