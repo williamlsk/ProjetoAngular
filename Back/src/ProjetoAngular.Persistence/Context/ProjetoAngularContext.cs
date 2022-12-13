@@ -27,6 +27,5 @@ namespace ProjetoAngular.Persistence.Context
             modelBuilder.Entity<Evento>().HasMany(e => e.RedeSocial).WithOne(rs => rs.Evento).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Palestrante>().HasMany(e => e.RedeSocial).WithOne(rs => rs.Palestrante).OnDelete(DeleteBehavior.Cascade);
         }
-
     }
 }
