@@ -10,7 +10,9 @@ import { ValidatorField } from '@app/helpers/ValidatorField';
 export class RegistrationComponent implements OnInit {
 
   form: FormGroup;
-  get f(): any {return this.form.controls;}
+  get f(): any {
+    return this.form.controls;
+  }
 
   constructor(public fb: FormBuilder) {
     this.validation();
@@ -37,6 +39,7 @@ export class RegistrationComponent implements OnInit {
     [Validators.required, Validators.minLength(6)]
   ],
   confirmeSenha: ['', Validators.required],
+
 }, formOptions);
 }
 }
